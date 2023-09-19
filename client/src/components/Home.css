@@ -1,0 +1,48 @@
+.home {
+    text-align: center;
+}
+
+.featured-section {
+    position: relative;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 20px;
+}
+
+
+.featured-text {
+    background-color: rgba(90, 231, 102, 0.8);
+    border-radius: 20px;
+    padding: 5px;
+    transform: rotate(-15deg);
+    z-index: 1;
+    margin-top: 10px;
+}
+
+.image-text {
+    margin-top: 40px;
+}
+
+@keyframes glideIn {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .glide-in {
+    animation: glideIn 0.5s ease-in-out forwards;
+    opacity: 0;
+  }
