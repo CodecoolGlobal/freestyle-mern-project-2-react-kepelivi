@@ -3,9 +3,12 @@ const mongoose = require("mongoose");
 const User = require("../model/User");
 const router = express.Router();
 
-router.get("/:name/:password", async (req, res) => {
+router.post("/user", async (req, res) => {
     try {
-        const user = await User.findOne({ name: req.params.name, password: req.params.password });
+        const user = await User.findOne({ name: req.body.name, password: req.body.password });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
         res.json(user);
     } catch (error) {
         console.error('Error fetching users:', error);

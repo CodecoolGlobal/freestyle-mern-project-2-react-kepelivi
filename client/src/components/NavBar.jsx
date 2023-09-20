@@ -1,6 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { notification } from 'antd';
 
-export default function NavBar({ loggedUser }) {
+export default function NavBar({ loggedUser, setLoggedUser }) {
+    const navigate = useNavigate();
     return (
         <>
             <h1 className='title'>Gotta fetch() 'Em All</h1>
@@ -23,9 +26,7 @@ export default function NavBar({ loggedUser }) {
                     </Link>
                 }
                 {loggedUser ?
-                    <Link to='logout'>
-                        <button onClick={() => {document.body.style.backgroundColor = '#FFFAFA'}}>Logout</button>
-                    </Link> :
+                    <button onClick={() => { document.body.style.backgroundColor = '#FFFAFA'; notification.success({ message: `${loggedUser.name} logged out` }); setLoggedUser(undefined); navigate('/') }}>Logout</button> :
                     <Link to='login'>
                         <button>Login</button>
                     </Link>}

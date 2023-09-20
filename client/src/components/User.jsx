@@ -27,8 +27,8 @@ export default function User({ loggedUser, setLoggedUser, url }) {
 
     const handleSaveEdit = async (id) => {
         await fetchData(url, id, 'PATCH', { password: editedUserPassword });
-        const user = await fetchData(url, id, 'GET');
-        setLoggedUser(user);
+        const loggedUser = await fetchData(url, id, 'GET');
+        setLoggedUser(loggedUser);
         setEditedUserId(null);
         setEditedUserPassword('');
     }
@@ -37,6 +37,13 @@ export default function User({ loggedUser, setLoggedUser, url }) {
         await fetchData(url, id, 'DELETE');
         setLoggedUser(undefined);
         navigate('/');
+    }
+
+    const handleRemovePokemon = async (id, name) => {
+        const updatedPokemons = [...loggedUser.pokemons.filter(pokemon => !pokemon.includes(name))];
+        await fetchData(url, id, 'PATCH', { pokemons: updatedPokemons });
+        const refreshedloggedUser = await fetchData(url, id, 'GET');
+        setLoggedUser(refreshedloggedUser);
     }
 
     return (
@@ -50,8 +57,8 @@ export default function User({ loggedUser, setLoggedUser, url }) {
                     <tr>
                         <td>Password: </td>
                         <td>{editedUserId === loggedUser._id ?
-                            <input type='text' value={editedUserPassword} onChange={e => setEditedUserPassword(e.target.value)} /> :
-                            loggedUser.password}</td>
+                            <input type='password' value={editedUserPassword} onChange={e => setEditedUserPassword(e.target.value)} /> :
+                            loggedUser.password.replace(/./g, '*')}</td>
                         <td>
                             {editedUserId === loggedUser._id ?
                                 <button className='save' onClick={() => handleSaveEdit(loggedUser._id)}>Save</button>
@@ -79,6 +86,7 @@ export default function User({ loggedUser, setLoggedUser, url }) {
                         <h3>ATTACK: {pokemon.stats[1].base_stat}</h3>
                         <h3>DEFENCE: {pokemon.stats[2].base_stat}</h3>
                         <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+                        <button onClick={() => handleRemovePokemon(loggedUser._id, pokemon.name)}>Remove pokemon</button>
                     </div>
                 ))}
             </div>
