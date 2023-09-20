@@ -303,3 +303,11 @@ button:hover {
 .battle>.own {
   margin-left: 150px;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
