@@ -45,12 +45,19 @@ export default function Pokedex() {
   const displayPokemon = (pokemon) => {
     return (
       <div className="pokemon" key={pokemon._id}>
-        <img src={pokemon.pokemonIMG_front} alt="pokemon front"></img>
-        <img src={pokemon.pokemonIMG_back} alt="pokemon back"></img>
-        <h3>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
-        <p>HP: {pokemon.hp_stat}</p>
-        <p>Attack: {pokemon.attack_stat}</p>
-        <p>Defense: {pokemon.deffense_stat}</p>
+        <div className="pokemon-inner">
+          <div className="pokemon-front">
+            <img className="front-img" src={pokemon.pokemonIMG_front} alt="pokemon front"></img>
+            <h3>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
+          </div>
+          <div className="pokemon-back">
+            <img className="back-img" src={pokemon.pokemonIMG_back} alt="pokemon back"></img>
+            <h3>Stats</h3>
+            <p>HP: {pokemon.hp_stat}</p>
+            <p>Attack: {pokemon.attack_stat}</p>
+            <p>Defense: {pokemon.deffense_stat}</p>
+          </div>
+        </div>
       </div>
     );
   };
@@ -91,6 +98,7 @@ export default function Pokedex() {
 
         <div className="pagination-container">
           <button
+          className="prev"
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(currentPage - 1)}
           >
@@ -100,6 +108,7 @@ export default function Pokedex() {
             Page {currentPage} of {totalPages}
           </span>
           <button
+          className="next"
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(currentPage + 1)}
           >
