@@ -69,7 +69,9 @@ export default function User({ loggedUser, setLoggedUser, url }) {
                     </tr>
                 </tbody>
             </table>
-            <button onClick={() => { handleDelete(loggedUser._id); document.body.style.backgroundColor = '#FFFAFA' }}>Delete user</button>
+            <button onClick={() => {
+                window.confirm(`Are you sure you wish to delete the user ${loggedUser.name}?`) && handleDelete(loggedUser._id);
+                document.body.style.backgroundColor = '#FFFAFA';}}>Delete user</button>
             <h2>Pokemons:</h2>
             <div className='userpokemons'>
                 {userPokemons.map(pokemon => (
