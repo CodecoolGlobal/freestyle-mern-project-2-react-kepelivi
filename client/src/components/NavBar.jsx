@@ -6,7 +6,6 @@ export default function NavBar({ loggedUser, setLoggedUser }) {
     const navigate = useNavigate();
     return (
         <>
-            <h1 className='title'>Gotta fetch() 'Em All</h1>
             <div className='navbar'>
                 <Link to='/'>
                     <button>Home</button>
