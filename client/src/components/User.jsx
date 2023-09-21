@@ -27,12 +27,12 @@ export default function User({ loggedUser, setLoggedUser, url }) {
     }
 
     const handleSaveEdit = async (id) => {
-        notification.success({ message: 'Password successfully changed!' });
         await fetchData(url, id, 'PATCH', { password: editedUserPassword });
         const loggedUser = await fetchData(url, id, 'GET');
         setLoggedUser(loggedUser);
         setEditedUserId(null);
         setEditedUserPassword('');
+        notification.success({ message: 'Password successfully changed!' });
     }
 
     const handleDelete = async (id, name) => {
