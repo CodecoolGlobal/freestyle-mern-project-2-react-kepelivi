@@ -28,6 +28,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
+        const checkUser = await User.findOne({ name: req.body.userName });
+        if (checkUser) {
+            return res.status(404).json({ error: 'User name already regsitered.' });
+        }
         const name = req.body.userName;
         const password = req.body.userPassword;
         const email = req.body.userEmail;

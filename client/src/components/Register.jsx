@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchData } from '../api.js';
+import { notification } from "antd";
 
 export default function Register({ url }) {
     const [userName, setUserName] = useState('');
@@ -10,8 +10,21 @@ export default function Register({ url }) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await fetchData(url, undefined, 'POST', { userName, userPassword, userEmail });
-        navigate('/');
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userName, userPassword, userEmail })
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            notification.success({ message: `${userName} successfully registered!` });
+            navigate('/');
+        }
+        catch (error) {
+            notification.error({ message: `${userName} already exist!` });
+        }
     }
 
     return (

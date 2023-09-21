@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchData } from '../api.js';
+import { notification } from 'antd';
 
 export default function User({ loggedUser, setLoggedUser, url }) {
     const [editedUserId, setEditedUserId] = useState(null);
@@ -33,13 +34,15 @@ export default function User({ loggedUser, setLoggedUser, url }) {
         setEditedUserPassword('');
     }
 
-    const handleDelete = async id => {
+    const handleDelete = async (id, name) => {
         await fetchData(url, id, 'DELETE');
+        notification.success({ message: `${name} successfully deleted!` })
         setLoggedUser(undefined);
         navigate('/');
     }
 
     const handleRemovePokemon = async (id, name) => {
+        notification.success({ message: `${name.charAt(0).toUpperCase() + name.slice(1)} successfully removed!` });
         const updatedPokemons = [...loggedUser.pokemons.filter(pokemon => !pokemon.includes(name))];
         await fetchData(url, id, 'PATCH', { pokemons: updatedPokemons });
         const refreshedloggedUser = await fetchData(url, id, 'GET');
@@ -77,8 +80,9 @@ export default function User({ loggedUser, setLoggedUser, url }) {
                 </tbody>
             </table>
             <button onClick={() => {
-                window.confirm(`Are you sure you wish to delete the user ${loggedUser.name}?`) && handleDelete(loggedUser._id);
-                document.body.style.backgroundColor = '#FFFAFA';}}>Delete user</button>
+                window.confirm(`Are you sure you wish to delete ${loggedUser.name}?`) && handleDelete(loggedUser._id, loggedUser.name);
+                document.body.style.backgroundColor = '#FFFAFA';
+            }}>Delete user</button>
             <h2>Pokemons:</h2>
             <div className='userpokemons'>
                 {userPokemons.map(pokemon => (

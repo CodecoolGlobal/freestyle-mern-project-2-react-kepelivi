@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchData } from '../api.js';
 import { notification } from 'antd';
 
 notification.config({
@@ -27,16 +26,13 @@ export default function Login({ url, setLoggedUser }) {
       }
       const loggedUser = await res.json();
       setLoggedUser(loggedUser);
-      notification.success({ message: `${loggedUser.name} logged in` });
+      notification.success({ message: `${loggedUser.name} logged in!` });
       navigate('/');
     }
     catch (error) {
-      notification.error({ message: 'User or password incorrect' });
+      notification.error({ message: 'User or password incorrect!' });
     }
   }
-
-  /*const loggedUser = await fetchData(`${url}/user`, undefined, 'POST', { name: userName, password: userPassword });*/
-  //setLoggedUser(loggedUser);
 
   return (
     <>
