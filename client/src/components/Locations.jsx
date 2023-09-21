@@ -65,6 +65,7 @@ export default function Locations({ loggedUser, url }) {
 
         return (
             <div className="locations">
+                <h2>Choose a location for battle, and catch more Pokemons!</h2>
                 {locations ? (
                     <>
                         {locations.map((location) => (
